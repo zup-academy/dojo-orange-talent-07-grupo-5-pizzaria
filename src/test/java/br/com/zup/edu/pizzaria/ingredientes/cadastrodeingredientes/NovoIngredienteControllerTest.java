@@ -1,5 +1,6 @@
 package br.com.zup.edu.pizzaria.ingredientes.cadastrodeingredientes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,21 @@ class NovoIngredienteControllerTest {
            .andExpect(status().isBadRequest())
                 .andDo(print());
 
+    }
+
+    @Test
+    void naoDeveCadastrarIngredienteDuplicado() throws Exception {
+        NovoIngredienteRequest body = new NovoIngredienteRequest("Queijo muçarela", new BigDecimal("2.0"), 100);
+        MockHttpServletRequestBuilder request = post("/api/ingredientes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(body));
+
+        mvc.perform(request)
+                .andExpect(status().isCreated())
+                .andDo(print());
+
+        mvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andDo(print());
     }
 }
