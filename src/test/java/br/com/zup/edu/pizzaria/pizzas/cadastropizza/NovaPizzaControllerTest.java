@@ -53,5 +53,28 @@ class NovaPizzaControllerTest {
 
     }
 
+    @Test
+    void naoDeveCadastrarUmaPizzaSemIngredientes() throws Exception {
+
+        NovoIngredienteRequest bodyIngrediente = new NovoIngredienteRequest("Queijo muçarela", new BigDecimal("2.0"), 200);
+        MockHttpServletRequestBuilder requestIgrediente = post("/api/ingredientes")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(bodyIngrediente));
+
+        mvc.perform(requestIgrediente);
+
+        NovaPizzaRequest bodyPizza = new NovaPizzaRequest("Alho", Collections.EMPTY_LIST);
+        MockHttpServletRequestBuilder requestPizza = post("/api/pizzas")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(bodyPizza));
+
+        mvc.perform(requestPizza)
+                .andExpect(status().isBadRequest());
+    }
+
+
+
+
+
 
 }

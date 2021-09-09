@@ -17,16 +17,16 @@ import static com.fasterxml.jackson.annotation.JsonCreator.Mode.PROPERTIES;
 public class NovaPizzaRequest {
 
     @NotBlank
+    @JsonProperty
     @UniqueValue(domainAtribute = "sabor",domainClass = Pizza.class)
     private String sabor;
 
     @NotNull
     @Size(min = 1)
-    @JsonProperty("ingredientes")
+    @JsonProperty
     private List<Long> ingredientes;
 
 
-    @JsonCreator(mode = PROPERTIES)
     public NovaPizzaRequest(String sabor,
                             List<Long> ingredientes) {
         this.sabor = sabor;
