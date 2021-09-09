@@ -2,6 +2,7 @@ package br.com.zup.edu.pizzaria.pizzas.cadastropizza;
 
 import br.com.zup.edu.pizzaria.ingredientes.cadastrodeingredientes.NovoIngredienteRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -12,7 +13,10 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -35,7 +39,9 @@ class NovaPizzaControllerTest {
 
         mvc.perform(requestIgrediente);
 
-        NovaPizzaRequest bodyPizza = new NovaPizzaRequest("Alho", Collections.singletonList(1L));
+        List<Long> ingredientes = new ArrayList<>();
+        ingredientes.add(1L);
+        NovaPizzaRequest bodyPizza = new NovaPizzaRequest("Alho", ingredientes);
         MockHttpServletRequestBuilder requestPizza = post("/api/pizzas")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(bodyPizza));

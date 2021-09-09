@@ -5,6 +5,7 @@ import br.com.zup.edu.pizzaria.ingredientes.IngredienteRepository;
 import br.com.zup.edu.pizzaria.pizzas.Pizza;
 import br.com.zup.edu.pizzaria.shared.validators.UniqueValue;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class NovaPizzaRequest {
 
     @NotNull
     @Size(min = 1)
+    @JsonProperty("ingredientes")
     private List<Long> ingredientes;
 
 
